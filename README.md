@@ -35,20 +35,29 @@ export const grants = {
 ### 2. フックの使い方
 `usePermission`フックを使って、権限判定を行います。
 
-#### can関数について
-`usePermission`フックが返す`can`関数は、任意のアクション・リソース・動的パラメータを指定して権限判定を行う関数です。
-
+#### usePermissionフックの引数
 ```ts
-can(
+usePermission(
   action?: Actions,
   resource?: Resources,
   dynamicParam?: ResourceDynamicParam<Resources>
-): boolean
+): { can: CanFunction, hasPermission: boolean }
 ```
-- `action`: 実行したいアクション（例: 'read', 'create' など）
-- `resource`: 対象リソース名
-- `dynamicParam`: 動的パラメータ（リソースによって型が異なる）
-- **返り値**: 権限があれば`true`、なければ`false`
+- `action`: 実行したいCRUDアクション（例: 'read', 'create' など）
+- `resource`: 対象リソース名、grants内で`definePermissions`を使用して定義したプロパティ名が対応する
+- `dynamicParam`: 動的パラメータ（リソースによって型が異なり、`definePermissions`のジェネリクスで指定する）
+- **返り値**: 
+  - `hasPermission`: 指定された引数に対する権限の有無（boolean | null）
+  - `can`: 権限判定を行う関数、引数は`usePermission`と同じ、戻り値は`hasPermission`と同様
+
+#### hasPermissionについて
+`usePermission`フックが返す`hasPermission`は、フックの引数で指定されたアクション・リソース・動的パラメータに対する権限の有無を表す真偽値です。
+`usePermission`の引数が空の場合にはnullが設定されます。
+
+```tsx
+const { hasPermission } = usePermission('read', 'resource:article', undefined);
+// hasPermissionがtrueなら表示、falseなら非表示など
+```
 
 #### 基本的な使い方
 ```tsx
@@ -56,8 +65,11 @@ import { usePermission } from '~/hooks/usePermission';
 
 function MyComponent() {
   const { can } = usePermission();
-  const isAllowed = can('read', 'resource:article');
+
+  const isAllowed = can('read', 'resource:article', undefined);
   // isAllowedがtrueなら表示、falseなら非表示など
+  // 第三引数は必至、definePermissionsのジェネリクスで指定されえいない場合はデフォルト値のundefinedを指定する
+  
 }
 ```
 
