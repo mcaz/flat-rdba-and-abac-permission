@@ -1,5 +1,5 @@
 {
-  "name": "rdba-abac-auth",
+  "name": "flat-rdba-and-abac-permission",
   "version": "1.0.0",
   "private": true,
   "workspaces": [
