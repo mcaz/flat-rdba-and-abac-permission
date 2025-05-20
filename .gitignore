@@ -1,7 +1,38 @@
-/node_modules
-/dist
-/build
-/coverage
-/logs
-/temp
-/cache
+# Dependencies
+node_modules
+**/node_modules
+
+# Build outputs
+dist
+build
+**/dist
+**/build
+
+# Test coverage
+coverage
+**/coverage
+
+# Logs
+logs
+**/logs
+
+# Cache
+.cache
+**/.cache
+.turbo
+**/.turbo
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

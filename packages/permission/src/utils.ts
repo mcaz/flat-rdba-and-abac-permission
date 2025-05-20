@@ -48,8 +48,6 @@ export function verifyPermission({
   resource?: Resources;
   context: Contexts<unknown>;
 }): boolean {
-  console.log('verifyPermission', grants, role, action, resource, context);
-
   if (!role || !action || !resource) {
     return handlePermissionError({
       code: "INVALID_PERMISSION",
@@ -70,8 +68,6 @@ export function verifyPermission({
 
   try {
     const hasPermission = permission[role]?.(context);
-
-    console.log('hasPermission', hasPermission);
 
     if (typeof hasPermission !== "boolean") {
       return handlePermissionError({

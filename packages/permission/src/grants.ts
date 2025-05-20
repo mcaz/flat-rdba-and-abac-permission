@@ -34,12 +34,10 @@ export const grants = {
     read: {
       // 指定されたuserIdと一致する場合のみ閲覧可能
       ADMIN: (ctx) => {
-        console.log('ADMIN', ctx);
         return ctx.dynamicParam.userId === "455cb998-2cb3-41cd-8c9e-41416db7d4abc";
       },
       // ログインユーザーのIDとURLパラメータのidが一致する場合のみ閲覧可能
       GENERAL: (ctx) => {
-        console.log('GENERAL', ctx);
         return ctx.dynamicParam.userId === "455cb998-2cb3-41cd-8c9e-41416db7d4dfg";
       },
       // 閲覧不可
